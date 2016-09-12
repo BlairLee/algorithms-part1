@@ -1,0 +1,32 @@
+class SocialNetwork Connectivity{
+  private UnionFindUF uf;
+  private int numComponents;
+  
+  public SocialNetwork(int N){
+    uf = new UnionFindUF(N);
+    numComponents = N;
+  }
+  
+  public void addRelations(int a, int b){
+    if(!uf.connected(a,b)){
+      uf.union(a, b);
+      numComponents--;
+    }
+  }
+  
+  public boolean isConnected(){
+    return numCompunents == 1;
+  }
+  
+  public static void main (String[] args){
+    SocialNetwork sn = new SocialNetwork(10);
+    while(!f.isEmpty()){
+      // read timestamp and relationship
+      // union relationship
+      // check if members fully connected
+      if(sn.isConnected())
+        break;
+    }
+  }
+  
+}
