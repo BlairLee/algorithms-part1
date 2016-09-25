@@ -1,0 +1,60 @@
+/**
+ * Merging with smaller auxiliary array. Suppose that the subarray
+ * 𝚊[𝟶] to 𝚊[𝚗−𝟷] is sorted and the subarray 𝚊[𝚗] to 𝚊[𝟸∗𝚗−𝟷] is sorted.
+ * How can you merge the two subarrays so that 𝚊[𝟶] to 𝚊[𝟸∗𝚗−𝟷] is sorted
+ * using an auxiliary array of length n (instead of 2n)?
+ **/
+import edu.princeton.cs.algs4.StdOut;
+
+import java.util.Arrays;
+
+public class MergingWithSmallerAuxiliaryArray {
+    public void MergingWithSmallerAuxiliaryAux(Comparable[] a, Comparable[] aux, int n){
+        int size = n/2;
+        assert isSorted(a, 0, size - 1);
+        boolean test = isSorted(a, 0, size - 1);
+        StdOut.print(test);
+        assert isSorted(a, size, a.length);
+
+        for (int k = 0; k < a.length; k++) {
+            aux[k] = a[k];
+        }
+
+        int i = 0, j = size;
+        for (int k = 0; k < a.length; k++) {
+            if (i >= size) a[k] = aux[j++];
+            else if (j > a.length) a[k] = aux[i++];
+            else if (aux[i].compareTo(aux[j]) < 0)
+                a[k] = aux[i++];
+            else
+                a[k] = aux[j++];
+        }
+
+        assert isSorted(a, 0, a.length);
+    }
+
+
+    public static boolean isSorted(Comparable[] a, int start, int end) {
+        for (int i = start; i < end; i++) {
+            if (a[i].compareTo(a[i + 1]) > 0) {
+                return false; // It is proven that the array is not sorted.
+            }
+        }
+
+        return true; // If this part has been reached, the array must be sorted.
+    }
+
+    public static void main(String[] args){
+        Comparable[] a = {20, 61, 70, 75, 99, 20, 51, 55, 75, 100};
+        MergingWithSmallerAuxiliaryArray m = new MergingWithSmallerAuxiliaryArray();
+        Comparable[] aux = new Comparable[a.length];
+        m.MergingWithSmallerAuxiliaryAux(a, aux, a.length);
+        StdOut.println("After Merging: ");
+        int k = 0;
+        while(k < a.length){
+            StdOut.print(a[k++]);
+            StdOut.print(" ");
+        }
+    }
+
+}
